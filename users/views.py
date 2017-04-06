@@ -37,7 +37,7 @@ def register(request):
                 new_user.set_password(user_form.cleaned_data['password'])
                 #Guardamos el objeto usuario
                 new_user.save()
-                return render(request, 'registration/register.html', {'user_form': user_form})
+                return render(request, 'registration/register_done.html', {'user_form': user_form})
         else:
             user_form = UserRegistrationForm()
         return render(request, 'registration/register.html', {'user_form': user_form})
