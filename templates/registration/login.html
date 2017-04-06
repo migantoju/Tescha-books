@@ -3,6 +3,18 @@
 {% block title %}Ingresa a tu cuenta{% endblock title %}
 
 {% block content %}
+
+<div class="errors">
+{% if form.errors %}
+<p>
+  Your username and password didn't match.       Please try again.
+</p>
+{% else %}
+<p></p>
+{% endif %}
+</div>
+
+
 <div class="modal-dialog">
     <div class="loginmodal-container">
         <h1>Ingresa a tu cuenta</h1><br>
@@ -19,7 +31,7 @@
             <input type="submit" name="login" class="btn btn-primary" value="Iniciar Sesión"></input>
         </form>
         <div class="login-help">
-            <a href="#">Registrate</a> - <a href="#">¿Olvidaste tu contraseña?</a>
+            <a href="#">Registrate</a> - <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
         </div>
     </div>
 </div>
