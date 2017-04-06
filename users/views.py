@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm
+from .forms import LoginForm, UserRegistrationForm
 from django.views.generic import FormView, TemplateView, RedirectView
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse_lazy
@@ -24,6 +24,23 @@ class LoginView(FormView):
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
 
+def register(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    else:
+        if request.method == 'POST':
+            user_form = UserRegistrationForm(request.POST)
+            if user_form.is_valid():
+                #Creamos un nuevo objeto usuario
+                new_user = user_form.save(commit=False)
+                #insertamos la contraseña
+                new_user.set_password(user_form.cleaned_data['password'])
+                #Guardamos el objeto usuario
+                new_user.save()
+                return render(request, 'registration/register.html', {'user_form': user_form})
+        else:
+            user_form = UserRegistrationForm()
+        return render(request, 'registration/register.html', {'user_form': user_form})
 # def user_login(request):
 #     if request.method == "POST":
 #         form = LoginForm(request.POST)

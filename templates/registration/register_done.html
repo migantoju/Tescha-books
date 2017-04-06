@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %} Registro Satisfactorio {% endblock content %}
+
+{% block content %}
+  <br>
+  <br>
+  <br>
+  <br>
+  <h1>Bienvenido {{new_user.first_name}}</h1>
+  <p>Tu cuenta ha sido creada satisfactoriamente. Ahora puedes <a href="{% url 'login' %}">Iniciar Sesión</a>.</p>
+{% endblock content %}
