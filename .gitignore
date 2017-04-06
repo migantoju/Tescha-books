@@ -1,0 +1,10 @@
+*.pyc
+__pycache__
+env
+myenv
+db.sqlite3
+*.sqlite3
+.DS_Store
+*.png
+*.jpg
+*.jpeg

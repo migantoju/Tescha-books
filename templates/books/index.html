@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  TeschaBooks - Inicio
+{% endblock title %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<div>
+  <h1>Página de Inicio</h1>
+  <h1>Página de Inicio</h1>
+  <h1>Página de Inicio</h1>
+  <h1>Página de Inicio</h1>
+  <h1>Página de Inicio</h1>
+</div>
+{% else %}
+<div>
+  <h1>No estas logeado</h1>
+  <h1>No estas logeado</h1>
+  <h1>No estas logeado</h1>
+  <h1>No estas logeado</h1>
+  <h1>No estas logeado</h1>
+  <h1>No estas logeado</h1>
+</div>
+{% endif %}
+
+{% endblock content %}
