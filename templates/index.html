@@ -6,23 +6,175 @@
 
 {% block content %}
 {% if request.user.is_authenticated %}
-<div>
-  <h1>Página de Inicio</h1>
-  <h1>Página de Inicio</h1>
-  <h1>Página de Inicio</h1>
-  <h1>Página de Inicio</h1>
-  <h1>Página de Inicio</h1>
-  <h1>Bienvenido: {{request.user.first_name}}</h1>
+<div class="container">
+  <div class="row" id="contenedor">
+    <div class="col-md-4">
+      <h1>{{request.user.username}}</h1>
+    </div>
+    <div class="col-md-4">
+      <h1>{{request.user.email}}</h1>
+    </div>
+    <div class="col-md-4">
+      <h1>{{request.user.get_full_name}}</h1>
+    </div>
+  </div>
 </div>
+<style type="text/css">
+#contenedor{
+  margin-top: 100px;
+}
+.dropdown{
+  margin-top: 10px;
+}
+#links{
+  text-decoration: none;
+  color: #222;
+}
+</style>
 {% else %}
-<div>
-  <h1>No estas logeado</h1>
-  <h1>No estas logeado</h1>
-  <h1>No estas logeado</h1>
-  <h1>No estas logeado</h1>
-  <h1>No estas logeado</h1>
-  <h1>No estas logeado</h1>
-</div>
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <style type="text/css">
+  .jumbotron{
+    margin-top: 100px;
+  }
+  .cen{
+    text-align: justify;
+  }
+  .icon{
+    text-align: center;
+  }
+  #icon{
+    margin: 10px 10px 0 0;
+    display: inline-block;
+    padding: 5px 10px;
+    color: #356577;
+  }
+  h2{
+    text-align: center;
+    color: #356577;
+  }
+  .btn-default{
+    background-color: #2C3E50;
+    border: none;
+    color: #fff;
+  }
+  .btn-default:hover{
+    background-color: #356577;
+    color: #fff;
+  }
+
+  </style>
+      <div class="jumbotron">
+        <div class="container">
+          <h1>TeschaBooks</h1>
+          <p id="txt1">
+            Un lugar dentro del Tecnologico para compartir conocimientos, experiencias y recursos para
+            ayudar a los demas.
+          </p>
+          <p><a class="btn btn-primary btn-lg" href="#" role="button">Leer Más &raquo;</a></p>
+        </div>
+      </div>
+
+      <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Comparte</h2> <div class="icon"><span class="fa fa-share fa-lg fa-4x" id="icon"></span></div>
+            <p class="cen">
+              Comparte en la comunidad de la escuela libros, documentos, tesis o una historia con la cual tus
+              demas compañeros puedan leerla o descargarla, así ayudaremos a contribuir conocimiento colectivo.
+            </p>
+            <p><a class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#myModal">Ver Detalles &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h2>Busca</h2> <div class="icon"><span class="fa fa-search fa-lg fa-4x" id="icon"></span></div>
+            <p class="cen">
+              Busca libros y recursos que tus compañeros y profesores hayan compartido, es tan facil como inciar sesión
+              y comenzar a sumergirte en un mundo de conocimiento que solo se acaba hasta que tu lo decidas.
+            </p>
+            <p><a class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#myModal2">Ver Detalles &raquo;</a></p>
+         </div>
+          <div class="col-md-4">
+            <h2>Aprende</h2> <div class="icon"><span class="fa fa-graduation-cap fa-lg fa-4x" id="icon"></span></div>
+            <p class="cen">
+              Aprende con los recursos compartidos por tus compañeros, unete a ellos en esta aventura del conocimiento
+              donde la imaginación es el limite y el cansancio solo algo pasajero, pero la satisfación es para siempre.
+            </p>
+            <p><a class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#myModal3">Ver Detalles &raquo;</a></p>
+          </div>
+        </div>
+
+        <!-- Modal comparte-->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Comparte</h4>
+              </div>
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Modal busca-->
+        <div id="myModal2" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Busca</h4>
+              </div>
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Modal aprende-->
+        <div id="myModal3" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Aprende</h4>
+              </div>
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <hr>
+
+        <footer class="footer">
+          <p>&copy; 2017 Miguel Toledano, Andromeda Inc.</p>
+          <div class="footer-social">
+
+          </div>
+        </footer>
+      </div> <!-- /container -->
 {% endif %}
 
 {% endblock content %}

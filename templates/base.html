@@ -16,7 +16,7 @@
 
     <!-- Theme CSS -->
     <link href="{% static 'css/freelancer.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/freelancer.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
@@ -24,9 +24,11 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
 </head>
+<body class="index">
+  <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
   <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -42,11 +44,19 @@
                         <a href="#"></a>
                     </li>
                     {% if request.user.is_authenticated %}
-                    <li>
+                    <!-- <li>
                       <a href="{% url 'logout_then_login' %}"><span class="fa fa-sign-out fa-lg"></span> Cerrar Sesión</a>
-                    </li>
+                    </li> -->
                     <li>
-                      <a href="#"><span class="fa fa-user fa-lg"></span> Mi Perfil</a>
+                      <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{request.user.username}}
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                          <li><a href="#" id="links"><span class="fa fa-user"></span>Mi Perfil</a></li>
+                          <li><a href="{% url 'password_change' %}" id="links"><span class="fa fa-key"></span>Cambiar Contraseña</a></li>
+                          <li><a href="{% url 'logout_then_login' %}" id="links"> <span class="fa fa-sign-out"></span>Cerrar Sesión</a></li>
+                        </ul>
+                      </div>
                     </li>
                     {% else %}
                     <li class="page-scroll">
@@ -56,7 +66,7 @@
                         <a href="{% url 'login' %}"><span class="fa fa-sign-in fa-lg"></span> Inicia Sesión</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#">Contacto</a>
+                        <a href="#">Acerca de</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -65,7 +75,6 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-<body>
   {% block content %}
   {% endblock content %}
 </body>
