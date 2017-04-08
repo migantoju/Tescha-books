@@ -1,0 +1,15 @@
+{% for book in books %}
+
+<div class="panel panel-primary">
+  <div class="panel-body">
+    <div class="book-title">
+      <a href="{% url 'book_detail' slug=book.slug %}">{{book.title}}</a>
+      <p>Por: {{book.owner}}</p>
+      <p>{{book.description|truncatechars:200}}</p>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-primary">Mas info</button>
+  </div>
+</div>
+  {% endfor %}

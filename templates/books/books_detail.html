@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} {{book.title}} {% endblock title %}
+
+{% block content %}
+  <div class="book">
+    {% if book.published_date %}
+      <div class="date">
+        {{ book.published_date }}
+      </div>
+    {% else %}
+      <a href="#">Publicar</a>
+    {% endif %}
+
+    {% if book.owner == request.user %}
+      <a href="#">Editar</a>
+      <a href="#">Remover</a>
+    {% endif %}
+    <h1 class="book_title">{{book.title}}</h1>
+    <h4>{{book.autor}}</h4>
+    <h4>Publicado por: {{book.owner}}</h4>
+  </div>
+  <style type="text/css">
+    .book{
+      margin-top: 100px;
+    }
+  </style>
+{% endblock content %}

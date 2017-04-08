@@ -44,19 +44,11 @@
                         <a href="#"></a>
                     </li>
                     {% if request.user.is_authenticated %}
-                    <!-- <li>
-                      <a href="{% url 'logout_then_login' %}"><span class="fa fa-sign-out fa-lg"></span> Cerrar Sesión</a>
-                    </li> -->
                     <li>
-                      <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{request.user.username}}
-                        <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                          <li><a href="#" id="links"><span class="fa fa-user"></span>Mi Perfil</a></li>
-                          <li><a href="{% url 'password_change' %}" id="links"><span class="fa fa-key"></span>Cambiar Contraseña</a></li>
-                          <li><a href="{% url 'logout_then_login' %}" id="links"> <span class="fa fa-sign-out"></span>Cerrar Sesión</a></li>
-                        </ul>
-                      </div>
+                        <a href="{% url 'logout_then_login' %}"><span class="fa fa-sign-out fa-lg"></span> Cerrar Sesión</a>
+                    </li>
+                    <li>
+                        <a href="#"><span class="fa fa-user fa-lg"></span> Mi Perfil</a>
                     </li>
                     {% else %}
                     <li class="page-scroll">
@@ -66,7 +58,7 @@
                         <a href="{% url 'login' %}"><span class="fa fa-sign-in fa-lg"></span> Inicia Sesión</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#">Acerca de</a>
+                        <a href="#"><span class="fa fa-support"></span> Acerca de</a>
                     </li>
                     {% endif %}
                 </ul>

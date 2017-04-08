@@ -8,18 +8,74 @@
 {% if request.user.is_authenticated %}
 <div class="container">
   <div class="row" id="contenedor">
-    <div class="col-md-4">
-      <h1>{{request.user.username}}</h1>
+    <div class="col-md-3 colorear">
+      <!-- buscador -->
+      <button type="button" class="btn btn-info btn-lg btnSearch" data-toggle="modal" data-target="#myModal">
+        <span class="fa fa-search fa-lg"></span>
+      </button>
+
+      <!-- Modal -->
+      <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Busca algo</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="col-sm-3 col-md-3">
+                        <form class="navbar-form" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Buscar" name="q" id="SS">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+      <!--  Termina buscador -->
     </div>
-    <div class="col-md-4">
-      <h1>{{request.user.email}}</h1>
+    <div class="col-md-6 colorear2" id="books-list">
+      {% include "books/list_ajax.html" %}
     </div>
-    <div class="col-md-4">
-      <h1>{{request.user.get_full_name}}</h1>
+    <div class="col-md-3 colorear3">
+
     </div>
   </div>
 </div>
 <style type="text/css">
+.btnSearch{
+  margin: 10px 10px 10px 10px;
+}
+#SS{
+  width: 200px;
+}
+.panel-primary{
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.colorear{
+  background-color: #222;
+  padding-bottom: 100px;
+}
+.colorear2{
+  background-color: #fff;
+  padding-bottom: 100px;
+}
+.colorear3{
+  background-color: #2d97c9;
+  padding-bottom: 100px;
+}
 #contenedor{
   margin-top: 100px;
 }
@@ -28,8 +84,9 @@
 }
 #links{
   text-decoration: none;
-  color: #222;
+  color: #2ec997;
 }
+
 </style>
 {% else %}
   <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -176,5 +233,10 @@
         </footer>
       </div> <!-- /container -->
 {% endif %}
+
+<script type="text/JavaScript">
+   var page = 1; var empty_page = false; var block_request = false; $(window).scroll(function() { var margin = $(document).height() - $(window).height() - 200; if ($(window).scrollTop() > margin && empty_page == false && block_request == false) { block_request
+= true; page += 1; $.get('?page=' + page, function(data) { if(data == '') { empty_page = true; } else { block_request = false; $('#books-list').append(data); } }); } });
+</script>
 
 {% endblock content %}

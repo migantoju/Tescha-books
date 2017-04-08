@@ -29,6 +29,7 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     autor = models.CharField(max_length=200)
+    description = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     files = models.FileField(upload_to=upload_location, validators=[validate_file_extension])
@@ -43,7 +44,8 @@ class Book(models.Model):
         return "%s" %(self.title)
 
     # Aqui va el get_absolute_url
-
+    def get_absolute_url(self):
+        return reverse("book_detail", kwargs={'slug': self.slug})
 #Creamos una funcion "create_slug" para crear el Slug que se va a guardar
 #en la base de datos y a la cual se le asignara a nuestro libro
 def create_slug(instance, new_slug=None):
