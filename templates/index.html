@@ -64,14 +64,14 @@
   margin-top: 10px;
   margin-bottom: 15px;
 }
+#abook{
+  font-size: 22px;
+}
 .colorear{
   background-color: #222;
   padding-bottom: 100px;
 }
-.colorear2{
-  background-color: #fff;
-  padding-bottom: 100px;
-}
+
 .colorear3{
   background-color: #2d97c9;
   padding-bottom: 100px;
@@ -88,6 +88,29 @@
 }
 
 </style>
+
+{% if books.has_other_pages %}
+  <ul class="pagination">
+    {% if books.has_previous %}
+      <li><a href="?page={{ books.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in books.paginator.page_range %}
+      {% if books.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if books.has_next %}
+      <li><a href="?page={{ books.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
 {% else %}
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <style type="text/css">

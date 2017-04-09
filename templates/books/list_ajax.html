@@ -2,9 +2,9 @@
 
 <div class="panel panel-primary">
   <div class="panel-body">
-    <div class="book-title">
-      <a href="{% url 'book_detail' slug=book.slug %}">{{book.title}}</a>
-      <p>Por: {{book.owner}}</p>
+    <div>
+      <a href="{% url 'book_detail' slug=book.slug %}" id="abook">{{book.title}}</a>
+      <p class="published_by">Por: {{book.owner.get_full_name}}</p>
       <p>{{book.description|truncatechars:200}}</p>
     </div>
   </div>
@@ -12,4 +12,14 @@
     <button class="btn btn-primary">Mas info</button>
   </div>
 </div>
+<style type="text/css">
+  .published_by{
+    font-size: 13px;
+    font-style: italic;
+  }
+  .panel-primary{
+    border: 10px;
+  }
+</style>
+
   {% endfor %}

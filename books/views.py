@@ -7,25 +7,28 @@ from .models import Book
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 # Create your views here.
 
 def index(request):
-    books = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    paginator = Paginator(books, 8)
-    page = request.GET.get('page')
+    books_list = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    query = request.GET.get('q')
+    if query:
+        books_list = books_list.filter(
+            Q(title__icontains=query)|
+            Q(description__icontains=query)|
+            Q(autor__icontains=query)|
+            Q(owner__first_name__icontains=query)|
+            Q(owner__last_name__icontains=query)
+            ).distinct()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(books_list, 10)
     try:
-        books = paginator.page('page')
+        books = paginator.page(page)
     except PageNotAnInteger:
-        # Si la pagina no es un numero entero, regresara a la primara pagina
         books = paginator.page(1)
     except EmptyPage:
-        if request.is_ajax():
-            #Si la peticion es via ajax y la pagina esta fuera de rango, retornara una pagina vacia
-            return HttpResponse('')
-        #Si la pagina esta fuera de rango, regresara a la ultima pagina con resultados
-        books = paginator.page(pagina.num_pages)
-    if request.is_ajax():
-        return render(request, 'books/list_ajax.html', {'books':books})
+        books = paginator.page(paginator.num_pages)
     return render(request, 'index.html', {'books':books})
 
 @login_required
