@@ -67,15 +67,6 @@
 #abook{
   font-size: 22px;
 }
-.colorear{
-  background-color: #222;
-  padding-bottom: 100px;
-}
-
-.colorear3{
-  background-color: #2d97c9;
-  padding-bottom: 100px;
-}
 #contenedor{
   margin-top: 100px;
 }
@@ -256,10 +247,5 @@
         </footer>
       </div> <!-- /container -->
 {% endif %}
-
-<script type="text/JavaScript">
-   var page = 1; var empty_page = false; var block_request = false; $(window).scroll(function() { var margin = $(document).height() - $(window).height() - 200; if ($(window).scrollTop() > margin && empty_page == false && block_request == false) { block_request
-= true; page += 1; $.get('?page=' + page, function(data) { if(data == '') { empty_page = true; } else { block_request = false; $('#books-list').append(data); } }); } });
-</script>
 
 {% endblock content %}

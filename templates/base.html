@@ -45,6 +45,9 @@
                     </li>
                     {% if request.user.is_authenticated %}
                     <li>
+                      <a href="{% url 'UploadBook' %}"><span class="fa fa-plus-circle fa-lg"></span> Subir Archivos</a>
+                    </li>
+                    <li>
                         <a href="{% url 'logout_then_login' %}"><span class="fa fa-sign-out fa-lg"></span> Cerrar Sesión</a>
                     </li>
                     <li>

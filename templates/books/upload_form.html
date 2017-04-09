@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} Subir nuevo archivo {% endblock title %}
+
+{% block content %}
+<div class="modal-dialog">
+    <div class="loginmodal-container">
+        <h1>Sube un nuevo recurso</h1><br>
+        <form role="form" action="{% url 'UploadBook' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Subir" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+{% endblock content %}

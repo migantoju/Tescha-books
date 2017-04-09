@@ -60,3 +60,8 @@ def create_slug(instance, new_slug=None):
     return slug
 #Mandamos a llamar el metodo "pre_save" para hacer una funcion antes de
 #guardar el slug
+def pre_save_book_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = create_slug(instance)
+
+pre_save.connect(pre_save_book_receiver, sender=Book)
