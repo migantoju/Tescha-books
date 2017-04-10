@@ -1,13 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, UserRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, ProfileForm, UserForm
 from django.views.generic import FormView, TemplateView, RedirectView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from .models import Profile
+from django.db import transaction
+from django.contrib import messages
+from django.utils.translation import ugettext as _
 # Create your views here.
 class LoginView(FormView):
     form_class = AuthenticationForm
@@ -41,20 +49,35 @@ def register(request):
         else:
             user_form = UserRegistrationForm()
         return render(request, 'registration/register.html', {'user_form': user_form})
-# def user_login(request):
-#     if request.method == "POST":
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             cd = form.cleaned_data
-#             user = authenticate(username=cd['username'], password=cd['password'])
-#             if user is not None:
-#                 if user.is_active:
-#                     login(request, user)
-#                     return HttpResponseRedirect('/index/')
-#                 else:
-#                     return HttpResponse('Algo salio mal')
-#             else:
-#                 return HttpResponse("Invalid Login")
-#     else:
-#         form = LoginForm()
-#     return render(request, 'account/login.html', {'form':form})
+
+@login_required
+def profile_page(request, username):
+    user = get_object_or_404(User, username=username)
+    return render(request, 'user/profile.html', {'usuario':user})
+
+@login_required
+@transaction.atomic
+def update_profile(request, username):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, _('Your profile was successfully updated!'))
+            return redirect('/')
+        else:
+            messages.error(request, _('Please correct the error below.'))
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'user/profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+
+# class ProfileUpdate(UpdateView):
+#     model = Usuarios
+#     fields = ['degree', 'matricula', 'pic', 'semestre']
+#     template_name_suffix = 'user/profile_update.html'

@@ -51,7 +51,7 @@
                         <a href="{% url 'logout_then_login' %}"><span class="fa fa-sign-out fa-lg"></span> Cerrar Sesión</a>
                     </li>
                     <li>
-                        <a href="#"><span class="fa fa-user fa-lg"></span> Mi Perfil</a>
+                        <a href="{% url 'Profile' username=user.username %}"><span class="fa fa-user fa-lg"></span> {{request.user.username}}</a>
                     </li>
                     {% else %}
                     <li class="page-scroll">

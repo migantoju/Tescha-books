@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Actualizar Perfil {% endblock title %}
+
+{% block content %}
+<div class="modal-dialog">
+    <div class="loginmodal-container">
+        <h1>Actualizar Perfil</h1><br>
+        <form role="form" action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <input type="submit" value="Actualizar" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+{% endblock content %}

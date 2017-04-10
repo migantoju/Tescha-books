@@ -3,5 +3,54 @@
 {% block title %} {{request.user.email}} {% endblock title %}
 
 {% block content %}
+{% if user.is_authenticated %}
+<div class="container p_container">
+  <div class="row">
+    <div class="col-md-3 c4">
+      <ul class="list-group lg1">
+        <li class="list-group-item"><a href="{% url 'profile_update' %}"><span class="fa fa-user fa-lg">
 
-{% block content %}
+        </span> Editar Perfil</a></li>
+        <li class="list-group-item"><a href="{% url 'password_change' %}"><span class="fa fa-key fa-lg">
+
+        </span> Cambiar Contraseña</a></li>
+        <li class="list-group-item"></li>
+      </ul>
+    </div>
+
+    <div class="col-md-9 c8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <img src="{{usuario.user_usuarios.pic.url}}" alt="">
+        </div>
+        <div class="panel-body">
+          <div class="modal-dialog">
+              <div class="loginmodal-container">
+                  <h1>Actualizar Perfil</h1><br>
+                  <form role="form" action="" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {{ user_form.as_p }}
+                      {{ profile_form.as_p }}
+                      <input type="submit" value="Actualizar" class="btn btn-primary">
+                  </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+  .lg1{
+    margin-top: 25px;
+  }
+  .p_container{
+    margin-top: 100px;
+  }
+  .lg1 a{
+    text-decoration: none;
+  }
+</style>
+{% endif %}
+{% endblock content %}

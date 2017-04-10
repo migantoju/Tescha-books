@@ -4,25 +4,31 @@
 
 {% block content %}
   <div class="book">
-    {% if book.published_date %}
-      <div class="date">
-        {{ book.published_date }}
+    <div class="jumbotron">
+      <h2 class="b_d_title">{{book.title}}</h2>
+      <p class="book_autor">Autor: {{book.autor}}</p>
+      <p class="book_description">{{book.description}}</p>
+      <div class="buttonn">
+        <button type="button" class="btn btn-primary"><span class="fa fa-download fa-lg"></span> Descargar</button>
       </div>
-    {% else %}
-      <a href="#">Publicar</a>
-    {% endif %}
-
-    {% if book.owner == request.user %}
-      <a href="#">Editar</a>
-      <a href="#">Remover</a>
-    {% endif %}
-    <h1 class="book_title">{{book.title}}</h1>
-    <h4>{{book.autor}}</h4>
-    <h4>Publicado por: {{book.owner}}</h4>
+    </div>
   </div>
   <style type="text/css">
     .book{
       margin-top: 100px;
     }
+    .b_d_title{
+      text-align: center;
+    }
+    .book_autor{
+      text-align: center;
+    }
+    .book_description{
+      text-align: center;
+    }
+    .buttonn{
+      text-align: center;
+    }
   </style>
+
 {% endblock content %}
