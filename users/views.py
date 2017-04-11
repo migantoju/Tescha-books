@@ -16,6 +16,7 @@ from .models import Profile
 from django.db import transaction
 from django.contrib import messages
 from django.utils.translation import ugettext as _
+from django.http import JsonResponse
 # Create your views here.
 class LoginView(FormView):
     form_class = AuthenticationForm
@@ -31,6 +32,24 @@ class LoginView(FormView):
     def form_valid(self, form):
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'A user with this username already exists.'
+    return JsonResponse(data)
+
+def validate_email(request):
+    email = request.GET.get('email', None)
+    data = {
+        'is_taken': User.objects.filter(email__iexact=email).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'Ya existe un usuario con este correo electronico'
+    return JsonResponse(data)
 
 def register(request):
     if request.user.is_authenticated():
@@ -65,19 +84,19 @@ def update_profile(request, username):
             user_form.save()
             profile_form.save()
             messages.success(request, _('Your profile was successfully updated!'))
-            return redirect('/')
+            return redirect('Profile', username=username)
         else:
             messages.error(request, _('Please correct the error below.'))
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
-    return render(request, 'user/profile.html', {
+    return render(request, 'user/profile_update.html', {
         'user_form': user_form,
         'profile_form': profile_form
     })
-
-
-# class ProfileUpdate(UpdateView):
-#     model = Usuarios
-#     fields = ['degree', 'matricula', 'pic', 'semestre']
-#     template_name_suffix = 'user/profile_update.html'
+from .filters import UserFilter
+#Django filter
+def search(request):
+    user_list = User.objects.all()
+    user_filter = UserFilter(request.GET, queryset=user_list)
+    return render(request, 'user/user_list.html', {'filter': user_filter})

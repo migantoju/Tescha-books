@@ -8,6 +8,20 @@
       <h2 class="b_d_title">{{book.title}}</h2>
       <p class="book_autor">Autor: {{book.autor}}</p>
       <p class="book_description">{{book.description}}</p>
+
+      <div class="heart-particle-box">
+         <button class="likes book-likes" id="heart-icon" data-book-id="{{ book.id }}">
+         {% if liked %}
+         <i class="heart-shaped fa fa-heart" style="display: line-block;"></i>
+         <i class="heart-shaped fa fa-heart-o" style="display: none;"></i>
+         {% else %}
+         <i class="heart-shaped fa fa-heart" style="display: none;"></i>
+         <i class="heart-shaped fa fa-heart-o" style="display: line-block;"></i>
+         {% endif %}
+         </button>
+         <div class="like_count_blog" id="heart-counter">{{ book.likes }}</div>
+      </div>
+
       <div class="buttonn">
         <button type="button" class="btn btn-primary"><span class="fa fa-download fa-lg"></span> Descargar</button>
       </div>

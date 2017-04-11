@@ -33,14 +33,14 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     degree = models.CharField(max_length=100, choices=Degree_choices)
     matricula = models.CharField(max_length=9)
-    pic = models.ImageField(upload_to=upload_location)
+    pic = models.ImageField(upload_to=upload_location, default='default.png')
     semestre = models.CharField(max_length=100, choices=Semestre_choices)
     created_date = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return "%s" %(self.user.first_name)
-        
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

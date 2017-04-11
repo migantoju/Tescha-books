@@ -30,6 +30,7 @@ class Book(models.Model):
     slug = models.SlugField(unique=True)
     autor = models.CharField(max_length=200)
     description = models.TextField()
+    likes = models.PositiveIntegerField(default=0)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     files = models.FileField(upload_to=upload_location, validators=[validate_file_extension])
@@ -39,6 +40,10 @@ class Book(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
+    #Regresa el numero total de likes que tiene un libro
+    @property
+    def total_likes(self):
+        return self.likes.count()
 #Mostramos el titulo del libro en un lenguaje humano
     def __unicode__(self):
         return "%s" %(self.title)

@@ -6,7 +6,7 @@
 <div class="modal-dialog">
     <div class="loginmodal-container">
         <h1>Registrate</h1><br>
-        <form role="form" action="" method="post">
+        <form role="form" action="" method="post" data-validate-username-url="{% url 'validate_username' %}">
             {% csrf_token %}
             {{user_form.as_p}}
             <input type="submit" value="Registrate" class="btn btn-primary">

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import LoginView, register, profile_page, update_profile
+from .views import LoginView, register, profile_page, update_profile, validate_username, validate_email, search
 from django.contrib.auth.views import (logout,logout_then_login, password_change, password_change_done,
                                         password_reset, password_reset_done, password_reset_confirm,
                                         password_reset_complete)
@@ -16,7 +16,9 @@ urlpatterns = [
     url(r'^password-reset/confirm/$', password_reset_confirm, name='password_reset_confirm'),
     url(r'^password-reset/complete/$', password_reset_complete, name='password_reset_complete'),
     #User
-    url(r'^profile/(?P<username>\w+)/$', update_profile, name='Profile'),
-    url(r'profile/edit/$', update_profile, name='profile_update'),
-
+    url(r'^profile/edit/(?P<username>\w+)/$', update_profile, name='profile_update'),
+    url(r'^profile/(?P<username>\w+)/$', profile_page, name='Profile'),
+    url(r'^ajax/validate_username/$', validate_username, name='validate_username'),
+    url(r'^ajax/validate_email/$', validate_email, name='validate_email'),
+    url(r'^search/$', search, name='search'),
 ]

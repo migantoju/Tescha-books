@@ -37,7 +37,13 @@ def index(request):
 @login_required
 def book_detail(request, slug=None):
     book = get_object_or_404(Book, slug=slug)
-    return render(request, 'books/books_detail.html', {'book':book})
+    book_id = book.pk
+    liked = False
+    if request.session.get('has_liked_'+str(book_id), liked):
+        liked = True
+        print("liked {}_{}".format(liked, book_id))
+    context = {'book':book, 'liked':liked}
+    return render(request, 'books/books_detail.html', context)
 
 @login_required
 def UploadBook(request):
@@ -54,3 +60,24 @@ def UploadBook(request):
     else:
         form = New_Book_Form()
     return render(request, 'books/upload_form.html', {'form':form})
+#Likes del libro
+def like_count_book(request):
+    liked = False
+    if request.method == 'GET':
+        book_id = request.GET['book_id']
+        book = Book.objects.get(id=int(book_id))
+        if request.session.get('has_liked_'+book_id, liked):
+            print('Unlike')
+            if book.likes > 0:
+                likes = book.likes - 1
+                try:
+                    del request.session['has_liked_'+ book_id]
+                except KeyError:
+                    print('KeyError')
+        else:
+            print('Like')
+            request.session['has_liked_' + book_id] = True
+            likes = book.likes + 1
+    book.likes = likes
+    book.save()
+    return HttpResponse(likes, liked)

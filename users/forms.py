@@ -21,6 +21,12 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Password Didnt match')
         return cd['password2']
 
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if User.objects.filter(email=data).exists():
+            raise forms.ValidationError('Este email ya esta en uso')
+        return data
+
 class UserForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))

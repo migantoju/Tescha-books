@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %} {{request.user.email}} {% endblock title %}
+{% block title %} {{request.user.email }} {% endblock title %}
 
 {% block content %}
+
+
+
 {% if user.is_authenticated %}
 <div class="container p_container">
   <div class="row">
     <div class="col-md-3 c4">
       <ul class="list-group lg1">
-        <li class="list-group-item"><a href="{% url 'profile_update' %}"><span class="fa fa-user fa-lg">
+        <li class="list-group-item"><a href="{% url 'profile_update' username=user.username %}"><span class="fa fa-user fa-lg">
 
         </span> Editar Perfil</a></li>
         <li class="list-group-item"><a href="{% url 'password_change' %}"><span class="fa fa-key fa-lg">
@@ -21,20 +24,48 @@
     <div class="col-md-9 c8">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <img src="{{usuario.user_usuarios.pic.url}}" alt="">
+          <h4 style="text-align: center;">Información de Usuario</h4>
         </div>
-        <div class="panel-body">
-          <div class="modal-dialog">
-              <div class="loginmodal-container">
-                  <h1>Actualizar Perfil</h1><br>
-                  <form role="form" action="" method="post" enctype="multipart/form-data">
-                      {% csrf_token %}
-                      {{ user_form.as_p }}
-                      {{ profile_form.as_p }}
-                      <input type="submit" value="Actualizar" class="btn btn-primary">
-                  </form>
-              </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+
+            </div>
           </div>
+        </div>
+        {% if user.profile.pic %}
+        <div class="panel-body">
+          <div class="img-res">
+            <img src="{{user.profile.pic.url}}" alt="{{user.get_full_name}}" class="img-responsive img-circle">
+          </div>
+        {% endif %}
+          <hr>
+          <div class="degree">
+            <h3 class="title-u">Semestre: </h3>
+            <h3>{{user.profile.semestre}}</h3>
+          </div>
+          <hr>
+          <div class="degree">
+            <h3 class="title-u">Carrera: </h3>
+            <h3>{{user.profile.get_degree_display}}</h3>
+          </div>
+          <hr>
+          <div class="degree">
+            <h3 class="title-u">Semestre: </h3>
+            <h3>{{user.profile.semestre}}</h3>
+          </div>
+          <hr>
+          <div class="degree">
+            <h3 class="title-u">Matricula: </h3>
+            <h3>{{user.profile.matricula}}</h3>
+          </div>
+          <hr>
+          {% if request.user == user %}
+          <div class="degree">
+            <h3 class="title-u">Miembro desde: </h3>
+            <h3>{{user.profile.created_date}}</h3>
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -42,6 +73,14 @@
 </div>
 
 <style type="text/css">
+.degree{
+  text-align: center;
+}
+.img-res{
+  width: 200px;
+  margin: 0 auto;
+
+}
   .lg1{
     margin-top: 25px;
   }
@@ -52,5 +91,6 @@
     text-decoration: none;
   }
 </style>
+
 {% endif %}
 {% endblock content %}
