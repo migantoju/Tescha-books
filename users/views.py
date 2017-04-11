@@ -17,6 +17,7 @@ from django.db import transaction
 from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.http import JsonResponse
+from django.views.decorators.debug import sensitive_variables
 # Create your views here.
 class LoginView(FormView):
     form_class = AuthenticationForm
@@ -32,7 +33,7 @@ class LoginView(FormView):
     def form_valid(self, form):
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
-
+@sensitive_variables('username')
 def validate_username(request):
     username = request.GET.get('username', None)
     data = {
@@ -50,7 +51,7 @@ def validate_email(request):
     if data['is_taken']:
         data['error_message'] = 'Ya existe un usuario con este correo electronico'
     return JsonResponse(data)
-
+@sensitive_variables('new_user')
 def register(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
