@@ -34,16 +34,14 @@ def index(request):
         books = paginator.page(paginator.num_pages)
     return render(request, 'index.html', {'books':books})
 
+import os
+from django.conf import settings
+from django.http import HttpResponse
+
 @login_required
 def book_detail(request, slug=None):
     book = get_object_or_404(Book, slug=slug)
-    book_id = book.pk
-    liked = False
-    if request.session.get('has_liked_'+str(book_id), liked):
-        liked = True
-        print("liked {}_{}".format(liked, book_id))
-    context = {'book':book, 'liked':liked}
-    return render(request, 'books/books_detail.html', context)
+    return render(request, 'books/books_detail.html', {'book':book})
 
 @login_required
 def UploadBook(request):
@@ -60,24 +58,23 @@ def UploadBook(request):
     else:
         form = New_Book_Form()
     return render(request, 'books/upload_form.html', {'form':form})
-#Likes del libro
-def like_count_book(request):
-    liked = False
-    if request.method == 'GET':
-        book_id = request.GET['book_id']
-        book = Book.objects.get(id=int(book_id))
-        if request.session.get('has_liked_'+book_id, liked):
-            print('Unlike')
-            if book.likes > 0:
-                likes = book.likes - 1
-                try:
-                    del request.session['has_liked_'+ book_id]
-                except KeyError:
-                    print('KeyError')
-        else:
-            print('Like')
-            request.session['has_liked_' + book_id] = True
-            likes = book.likes + 1
-    book.likes = likes
-    book.save()
-    return HttpResponse(likes, liked)
+
+@login_required
+def book_edit(request, slug=None):
+    book = get_object_or_404(Book, slug=slug)
+    if request.method == 'POST':
+        form = New_Book_Form(request.POST or None, request.FILES or None, instance=book)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.owner = request.user
+            book.save()
+            return redirect('book_detail', slug=slug)
+    else:
+        form = New_Book_Form(instance=book)
+    return render(request, 'books/book_edit.html', {'form':form})
+
+@login_required
+def book_remove(request, slug=None):
+    book = get_object_or_404(Book, slug=slug)
+    book.delete()
+    return redirect('/')

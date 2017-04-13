@@ -5,25 +5,15 @@
 {% block content %}
   <div class="book">
     <div class="jumbotron">
+      {% if book.owner == request.user %}
+      <a href="{% url 'book_edit' slug=book.slug %}" class="btn btn-info"><span class="fa fa-pencil-square-o fa-lg"></span> Editar</a>
+      <a href="{% url 'book_remove' slug=book.slug %}" class="btn btn-danger"><span class="fa fa-trash-o fa-lg"></span>Borrar</a>
+      {% endif %}
       <h2 class="b_d_title">{{book.title}}</h2>
       <p class="book_autor">Autor: {{book.autor}}</p>
       <p class="book_description">{{book.description}}</p>
-
-      <div class="heart-particle-box">
-         <button class="likes book-likes" id="heart-icon" data-book-id="{{ book.id }}">
-         {% if liked %}
-         <i class="heart-shaped fa fa-heart" style="display: line-block;"></i>
-         <i class="heart-shaped fa fa-heart-o" style="display: none;"></i>
-         {% else %}
-         <i class="heart-shaped fa fa-heart" style="display: none;"></i>
-         <i class="heart-shaped fa fa-heart-o" style="display: line-block;"></i>
-         {% endif %}
-         </button>
-         <div class="like_count_blog" id="heart-counter">{{ book.likes }}</div>
-      </div>
-
       <div class="buttonn">
-        <button type="button" class="btn btn-primary"><span class="fa fa-download fa-lg"></span> Descargar</button>
+        <a href="{{book.files.url}}" class="btn btn-primary">Ver <span class="fa fa-eye fa-lg"></span> </a>
       </div>
     </div>
   </div>

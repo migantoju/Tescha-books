@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
+    <title>Acerca de - TeschaBooks</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h1 class="title">¡Hola!</h1>
+          <h2 class="title">Mi nombre es: <i>Miguel Toledano</i></h2>
+        </div>
+        <div class="col s12">
+          <img src="../toledano.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </body>
+<script src="{% static 'js/materialize.min.js' %}" charset="utf-8"></script>
+</html>
+<style type="text/css">
+  body{
+    background-color: rgb(45, 204, 185);
+  }
+  .title{
+    text-align: center;
+    color: #fff;
+  }
+</style>
