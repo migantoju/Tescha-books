@@ -45,6 +45,9 @@
                     </li>
                     {% if request.user.is_authenticated %}
                     <li>
+                      <a href="{% url 'book_draft_list' %}"><span class="fa fa-archive fa-lg"></span></a>
+                    </li>
+                    <li>
                       <a href="{% url 'UploadBook' %}"><span class="fa fa-plus-circle fa-lg"></span> Subir Archivos</a>
                     </li>
                     <li>

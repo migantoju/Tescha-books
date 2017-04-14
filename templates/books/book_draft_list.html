@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Borrador - {{request.user.username}} {% endblock title %}
+
+{% block content %}
+  {% for books in book %}
+    {% if books.owner == request.user %}
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <div>
+          <h3><a href="{% url 'book_detail' slug=books.slug %}" id="abook">{{books.title}}</a></h3>
+          <p class="published_by">Por: {{books.owner.get_full_name}}</p>
+          <p>{{books.description|truncatechars:200}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endif %}
+  <style type="text/css">
+    .panel-primary{
+      margin-top: 110px;
+    }
+    .published_by{
+      font-size: 13px;
+      font-style: italic;
+    }
+    .panel-primary{
+      border: 10px;
+    }
+  </style>
+{% endfor %}
+{% endblock content %}

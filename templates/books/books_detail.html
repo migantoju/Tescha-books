@@ -5,9 +5,19 @@
 {% block content %}
   <div class="book">
     <div class="jumbotron">
+
       {% if book.owner == request.user %}
-      <a href="{% url 'book_edit' slug=book.slug %}" class="btn btn-info"><span class="fa fa-pencil-square-o fa-lg"></span> Editar</a>
-      <a href="{% url 'book_remove' slug=book.slug %}" class="btn btn-danger"><span class="fa fa-trash-o fa-lg"></span>Borrar</a>
+      <div class="actions">
+        <a id="deleteBook" href="{% url 'book_edit' slug=book.slug %}" class="btn btn-info"><span class="fa fa-pencil-square-o fa-lg"></span> Editar</a>
+        <a href="{% url 'book_remove' slug=book.slug %}" class="btn btn-danger"><span class="fa fa-trash-o fa-lg"></span> Borrar</a>
+        {% if book.published_date %}
+          <div class="date">
+            {{book.published_date}}
+          </div>
+        {% else %}
+          <a href="{% url 'book_publish' slug=book.slug %}" class="btn btn-success"><span class="fa fa-pencil fa-lg"></span> Publicar</a>
+        {% endif %}
+      </div>
       {% endif %}
       <h2 class="b_d_title">{{book.title}}</h2>
       <p class="book_autor">Autor: {{book.autor}}</p>
@@ -18,6 +28,13 @@
     </div>
   </div>
   <style type="text/css">
+  .actions{
+    text-align: center;
+  }
+  .btn-success{
+    background-color: green;
+    border-color: green;
+  }
     .book{
       margin-top: 100px;
     }
@@ -32,6 +49,9 @@
     }
     .buttonn{
       text-align: center;
+    }
+    .actions{
+
     }
   </style>
 

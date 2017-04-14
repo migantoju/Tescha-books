@@ -29,14 +29,18 @@ $("#id_email").change(function () {
 
 });
 
-$(document).ready(function() {
-  $('.book-likes').click(function() {
-      var id;
-      id = $(this).attr('data-book-id');
-      $.get('/like-book/', {
-          book_id: id
-      }, function(data) {
-          $('.like_count_book').html(data);
-      });
-  });
+$("#deleteBook").click(function(){
+  var deleteB = $(this).parent()
+  if(confirm("¿Estas seguro(a) que deseas eliminar este archivo?")){
+    $.ajax({
+      type: 'DELETE',
+      url: $(this).data('url'),
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+      },
+      success: function() {
+        deleteB.fadeOut(1000);
+      }
+    });
+  }
 });

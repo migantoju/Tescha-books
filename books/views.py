@@ -34,10 +34,6 @@ def index(request):
         books = paginator.page(paginator.num_pages)
     return render(request, 'index.html', {'books':books})
 
-import os
-from django.conf import settings
-from django.http import HttpResponse
-
 @login_required
 def book_detail(request, slug=None):
     book = get_object_or_404(Book, slug=slug)
@@ -50,7 +46,7 @@ def UploadBook(request):
         form = New_Book_Form(request.POST or None, request.FILES or None)
         if form.is_valid():
             book = form.save(commit=False)
-            book.published_date = timezone.now()
+            # book.published_date = timezone.now()
             book.owner = request.user
             book.save()
             saved = True
@@ -78,3 +74,14 @@ def book_remove(request, slug=None):
     book = get_object_or_404(Book, slug=slug)
     book.delete()
     return redirect('/')
+
+@login_required
+def book_draft_list(request):
+    book = Book.objects.filter(published_date__isnull=True).order_by('-created_date')
+    return render(request, 'books/book_draft_list.html', {'book': book})
+
+@login_required
+def book_publish(request, slug=None):
+    book = get_object_or_404(Book, slug=slug)
+    book.publish()
+    return redirect('book_detail', slug=slug)
