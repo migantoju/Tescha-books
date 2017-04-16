@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'admin_interface',
     'flat_responsive',
-    # 'flat', #if django version < 1.9
     'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,13 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'books',
+    'comments',
     'users',
     'django_filters',
     'widget_tweaks',
     'stdimage',
     'taggit',
     'taggit_templatetags2',
-    'comments',
 ]
 
 MIDDLEWARE = [

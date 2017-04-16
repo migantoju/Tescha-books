@@ -2,13 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from books.models import Book
+
 from django.contrib.auth.models import User
 from django.utils import timezone
 # Create your models here.
 
 class Comment(models.Model):
-    book = models.ForeignKey(Book, related_name='cooments')
+    book = models.ForeignKey('books.Book', related_name='comments')
     user = models.ForeignKey(User, unique=False)
     text = models.CharField(max_length=250)
     created_date = models.DateTimeField(default=timezone.now)
@@ -22,4 +22,4 @@ class Comment(models.Model):
         return self.user.username
 
 def approved_comments(self):
-    return self.cooments.filter(approved_comment=True)
+    return self.comments.filter(approved_comment=True)

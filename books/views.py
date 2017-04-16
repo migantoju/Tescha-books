@@ -92,3 +92,18 @@ def book_publish(request, slug=None):
     book = get_object_or_404(Book, slug=slug)
     book.publish()
     return redirect('book_detail', slug=slug)
+
+from comments.models import Comment
+
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approved()
+    return redirect('book_detail', slug=comment.book.slug)
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    book_pk = comment.book.slug
+    comment.delete()
+    return redirect('book_detail', slug=book_pk)

@@ -37,6 +37,7 @@ class Book(models.Model):
     files = models.FileField(upload_to=upload_location, validators=[validate_file_extension])
     book_type = models.CharField(max_length=100, choices=Book_Type_Choices)
     tags = TaggableManager()
+    comment = models.ForeignKey('comments.Comment', related_name='books', null=True, blank=True)
 
 #Definimos la funcion para publicar el libro
     def publish(self):

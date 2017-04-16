@@ -37,22 +37,13 @@ class UserForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     matricula = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
     class Meta:
         model = Profile
         fields = ['degree', 'matricula', 'pic', 'semestre']
 
-    # def save_Profile(self, request, user):
-    #     cd = self.claened_data
-    #     user.degree = cd['degree']
-    #     user.matricula = cd['matricula']
-    #     user.pic = cd['pic']
-    #     user.semestre = cd['semestre']
-    #     user.save()
-    #
-    #     profile = Usuarios()
-    #     profile.user = user
-    #     profile.degree = cd['degree']
-    #     profile.matricula = cd['matricula']
-    #     profile.pic = cd['pic']
-    #     profile.semestre = cd['semestre']
-    #     profile.save()
+    # def clean_matricula(self):
+    #     data = self.cleaned_data['matricula']
+    #     if User.objects.filter(matricula=data).exists():
+    #         raise forms.ValidationError('Ya existe un usuario registrado con esta matricula.')
+    #     return data

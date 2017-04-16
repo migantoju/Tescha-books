@@ -11,7 +11,8 @@
   </div>
   <div class="panel-footer">
     <!-- {% get_taglist as tags %} -->
-    {% get_taglist as tags for 'books.Book' %}
+    <!-- {% get_taglist as tags for 'books.Book' %} -->
+    {% get_tags_for_object book as "tags" %}
     <ul class="list-inline">
       {% for tag in tags %}
         <li>{{tag}} </li>

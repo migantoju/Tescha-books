@@ -46,11 +46,14 @@
               <img src="{{comment.user.profile.pic.thumbnail.url}}" class="img-responsive img-circle" alt="">
             </div>
             {% if not comment.approved_comment %}
-            {% if book.user == request.user %}
-              <a href="{% url 'comment_remove' pk=comment.pk %}" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a>
-              <a href="{% url 'comment_approve' pk=comment.pk %}" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></a>
+            {% if book.owner == request.user %}
+            <div class="btb-actions">
+                <a href="{% url 'comment_remove' pk=comment.pk %}" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a>
+                <a href="{% url 'comment_approve' pk=comment.pk %}" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></a>
+            </div>
             {% endif %}
             {% endif %}
+
               <h4 class="media-heading text-uppercase reviews">{{comment.user.get_full_name}} </h4>
               <ul class="media-date text-uppercase reviews list-inline">
                 <li>{{comment.created_date}}</li>
@@ -71,6 +74,9 @@
   </div>
 </div>
   <style type="text/css">
+  .btb-actions{
+    float: right
+  }
   .comment{
     margin-bottom: 15px;
   }
