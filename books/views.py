@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.views.generic import CreateView
 from .forms import New_Book_Form
 from django.contrib.auth.models import User
+
 # Create your views here.
 
 def index(request):
@@ -34,10 +35,15 @@ def index(request):
         books = paginator.page(paginator.num_pages)
     return render(request, 'index.html', {'books':books})
 
+from comments.forms import CommentForm
+from comments.models import Comment
+
 @login_required
 def book_detail(request, slug=None):
     book = get_object_or_404(Book, slug=slug)
-    return render(request, 'books/books_detail.html', {'book':book})
+    comments = Comment.objects.all()
+    form = CommentForm()
+    return render(request, 'books/books_detail.html', {'book':book, 'form':form, 'comments':comments})
 
 @login_required
 def UploadBook(request):
@@ -50,6 +56,7 @@ def UploadBook(request):
             book.owner = request.user
             book.save()
             saved = True
+            form.save_m2m()
             return redirect('/')
     else:
         form = New_Book_Form()

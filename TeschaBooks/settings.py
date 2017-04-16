@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'flat_responsive',
+    # 'flat', #if django version < 1.9
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +45,10 @@ INSTALLED_APPS = [
     'users',
     'django_filters',
     'widget_tweaks',
+    'stdimage',
+    'taggit',
+    'taggit_templatetags2',
+    'comments',
 ]
 
 MIDDLEWARE = [
@@ -128,6 +136,8 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_cdn')
+
 from django.core.urlresolvers import reverse_lazy
+
 LOGIN_REDIRECT_URL = '/index/'
 LOGOUT_URL = reverse_lazy('logout')

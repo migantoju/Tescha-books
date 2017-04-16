@@ -8,12 +8,13 @@ from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
+from taggit.managers import TaggableManager
 # Create your models here.
 
 Book_Type_Choices = (
     ('Programacion', 'Programacion'),
     ('Base de Datos', 'Base de Datos'),
-    ("Inteligencia Artificial", 'Inteligencia Artificial'),
+    ('Inteligencia Artificial', 'Inteligencia Artificial'),
     ("Machine Learning", 'Machine Learning'),
 )
 
@@ -35,15 +36,12 @@ class Book(models.Model):
     published_date = models.DateTimeField(blank=True, null=True)
     files = models.FileField(upload_to=upload_location, validators=[validate_file_extension])
     book_type = models.CharField(max_length=100, choices=Book_Type_Choices)
+    tags = TaggableManager()
 
 #Definimos la funcion para publicar el libro
     def publish(self):
         self.published_date = timezone.now()
         self.save()
-    #Regresa el numero total de likes que tiene un libro
-    @property
-    def total_likes(self):
-        return self.likes.count()
 #Mostramos el titulo del libro en un lenguaje humano
     def __unicode__(self):
         return "%s" %(self.title)

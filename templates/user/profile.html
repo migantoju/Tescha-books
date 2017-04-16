@@ -4,8 +4,6 @@
 
 {% block content %}
 
-
-
 {% if user.is_authenticated %}
 <div class="container p_container">
   <div class="row">
@@ -36,7 +34,7 @@
         {% if user.profile.pic %}
         <div class="panel-body">
           <div class="img-res">
-            <img src="{{user.profile.pic.url}}" alt="{{user.get_full_name}}" class="img-responsive img-circle">
+            <img src="{{user.profile.pic.medium.url}}" alt="{{user.get_full_name}}" class="img-responsive img-circle">
           </div>
         {% endif %}
           <hr>

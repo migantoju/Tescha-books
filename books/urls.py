@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/remove/$', book_remove, name='book_remove'),
     url(r'^draft/$', book_draft_list, name='book_draft_list'),
     url(r'^(?P<slug>[\w-]+)/publish/$', book_publish, name='book_publish'),
+
 ]

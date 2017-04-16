@@ -8,7 +8,7 @@
 
       {% if book.owner == request.user %}
       <div class="actions">
-        <a id="deleteBook" href="{% url 'book_edit' slug=book.slug %}" class="btn btn-info"><span class="fa fa-pencil-square-o fa-lg"></span> Editar</a>
+        <a href="{% url 'book_edit' slug=book.slug %}" class="btn btn-info"><span class="fa fa-pencil-square-o fa-lg"></span> Editar</a>
         <a href="{% url 'book_remove' slug=book.slug %}" class="btn btn-danger"><span class="fa fa-trash-o fa-lg"></span> Borrar</a>
         {% if book.published_date %}
           <div class="date">
@@ -27,7 +27,53 @@
       </div>
     </div>
   </div>
+
+  <!-- Comentarios -->
+<div class="container">
+  <div class="row">
+  <div class="col-md-6 comment" style="text-align: center;">
+    {% include 'comments/add_comment_to_book.html' %}
+  </div>
+{% for comment in comments %}
+
+  {% if book.id == comment.book.id %}
+
+    {% if user.is_authenticated or comment.approved_comment %}
+    <div class="col-sm-6 col-sm-offset-1">
+      <div class="media-body">
+          <div class="well well-lg">
+            <div class="avatar">
+              <img src="{{comment.user.profile.pic.thumbnail.url}}" class="img-responsive img-circle" alt="">
+            </div>
+            {% if not comment.approved_comment %}
+            {% if book.user == request.user %}
+              <a href="{% url 'comment_remove' pk=comment.pk %}" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span></a>
+              <a href="{% url 'comment_approve' pk=comment.pk %}" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></a>
+            {% endif %}
+            {% endif %}
+              <h4 class="media-heading text-uppercase reviews">{{comment.user.get_full_name}} </h4>
+              <ul class="media-date text-uppercase reviews list-inline">
+                <li>{{comment.created_date}}</li>
+              </ul>
+              <p class="media-comment">
+                  {{comment.text}}
+              </p>
+              <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+              <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> 2 comments</a>
+          </div>
+      </div>
+    </div>
+    {% endif %}
+
+  {% endif %}
+
+{% endfor %}
+  </div>
+</div>
   <style type="text/css">
+  .comment{
+    margin-bottom: 15px;
+  }
   .actions{
     text-align: center;
   }

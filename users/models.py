@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 # Create your models here.
 
 Degree_choices = (
@@ -29,11 +30,18 @@ Semestre_choices = (
 def upload_location(instance, filename):
     return "%s/%s" %(instance.matricula, filename)
 
+from stdimage.models import StdImageField
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     degree = models.CharField(max_length=100, choices=Degree_choices)
     matricula = models.CharField(max_length=9)
-    pic = models.ImageField(upload_to=upload_location, default='default.png')
+    # pic = models.ImageField(upload_to=upload_location, default='default.png')
+    pic = StdImageField(upload_to=upload_location, default='default.png', blank=True, variations={
+        'large': (600, 400),
+        'thumbnail': (100, 100, True),
+        'medium': (300, 200),
+    })
     semestre = models.CharField(max_length=100, choices=Semestre_choices)
     created_date = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True)

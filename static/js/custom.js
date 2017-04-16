@@ -28,19 +28,3 @@ $("#id_email").change(function () {
   });
 
 });
-
-$("#deleteBook").click(function(){
-  var deleteB = $(this).parent()
-  if(confirm("¿Estas seguro(a) que deseas eliminar este archivo?")){
-    $.ajax({
-      type: 'DELETE',
-      url: $(this).data('url'),
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-      },
-      success: function() {
-        deleteB.fadeOut(1000);
-      }
-    });
-  }
-});

@@ -1,0 +1,8 @@
+
+{% load widget_tweaks %}
+
+<form action="{% url 'add_comment_to_book' pk=book.pk %}" method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit" class="btn btn-primary"><span class="fa fa-commenting-o fa-lg"></span> Comentar</button>
+</form>

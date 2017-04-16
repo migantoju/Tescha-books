@@ -1,3 +1,4 @@
+{% load taggit_templatetags2_tags %}
 {% for book in books %}
 
 <div class="panel panel-primary">
@@ -7,6 +8,15 @@
       <p class="published_by">Por: {{book.owner.get_full_name}}</p>
       <p>{{book.description|truncatechars:200}}</p>
     </div>
+  </div>
+  <div class="panel-footer">
+    <!-- {% get_taglist as tags %} -->
+    {% get_taglist as tags for 'books.Book' %}
+    <ul class="list-inline">
+      {% for tag in tags %}
+        <li>{{tag}} </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
 <style type="text/css">
@@ -18,5 +28,4 @@
     border: 10px;
   }
 </style>
-
-  {% endfor %}
+{% endfor %}

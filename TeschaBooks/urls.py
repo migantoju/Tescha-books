@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^', include('books.urls')),
     url(r'^accounts/', include('users.urls')),
     url(r'^about/', about, name='about'),
+    url(r'comments/', include('comments.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
