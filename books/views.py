@@ -57,7 +57,7 @@ def UploadBook(request):
             book.save()
             saved = True
             form.save_m2m()
-            return redirect('/')
+            return redirect('/draft')
     else:
         form = New_Book_Form()
     return render(request, 'books/upload_form.html', {'form':form})
@@ -66,7 +66,7 @@ def UploadBook(request):
 def book_edit(request, slug=None):
     book = get_object_or_404(Book, slug=slug)
     if request.method == 'POST':
-        form = New_Book_Form(request.POST or None, request.FILES or None, instance=book)
+        form = New_Book_Form(request.POST, request.FILES, instance=book)
         if form.is_valid():
             book = form.save(commit=False)
             book.owner = request.user

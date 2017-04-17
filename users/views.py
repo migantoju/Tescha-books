@@ -33,6 +33,7 @@ class LoginView(FormView):
     def form_valid(self, form):
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
+
 @sensitive_variables('username')
 def validate_username(request):
     username = request.GET.get('username', None)
@@ -51,7 +52,8 @@ def validate_email(request):
     if data['is_taken']:
         data['error_message'] = 'Ya existe un usuario con este correo electronico'
     return JsonResponse(data)
-@sensitive_variables('new_user')
+
+@sensitive_variables('new_user', 'password')
 def register(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
@@ -104,4 +106,5 @@ def search(request):
 
 ########### ABOUT
 def about(request):
-    return render(request, 'about/about.html', {})
+    toledano = User.objects.filter(User_username='mosthatedhb')
+    return render(request, 'about/about.html', {'toledano': toledano})

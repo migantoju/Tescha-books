@@ -28,16 +28,16 @@ class UserRegistrationForm(forms.ModelForm):
         return data
 
 class UserForm(forms.ModelForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label="Nombre(s)", widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label="Apellidos", widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label="E-mail", widget=forms.TextInput(attrs={'class': 'form-control'}))
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
 
 class ProfileForm(forms.ModelForm):
     matricula = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-
+    pic = forms.ImageField(label="Foto de Perfil")
     class Meta:
         model = Profile
         fields = ['degree', 'matricula', 'pic', 'semestre']

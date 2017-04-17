@@ -48,7 +48,7 @@
                       <a href="{% url 'book_draft_list' %}"><span class="fa fa-archive fa-lg"></span></a>
                     </li>
                     <li>
-                      <a href="{% url 'UploadBook' %}"><span class="fa fa-plus-circle fa-lg"></span> Subir Archivos</a>
+                      <a href="{% url 'UploadBook' %}"><span class="fa fa-upload fa-lg" ></span> </a>
                     </li>
                     <li>
                         <a href="{% url 'logout_then_login' %}"><span class="fa fa-sign-out fa-lg"></span> Cerrar Sesión</a>
@@ -76,6 +76,10 @@
   {% block content %}
   {% endblock content %}
 </body>
+
+<!-- Incluimos el footer -->
+{% include 'footer.html' %}
+
 <!-- jQuery -->
 <script src="{% static 'jquery/jquery.min.js' %}"></script>
 <script src="{% static 'js/custom.js' %}"></script>

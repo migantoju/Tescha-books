@@ -11,9 +11,16 @@
     <div class="col-md-3 colorear">
       <!-- buscador -->
       <button type="button" class="btn btn-info btn-lg btnSearch" data-toggle="modal" data-target="#myModal">
-        <span class="fa fa-search fa-lg"></span>
+        <span class="fa fa-search fa-lg"> Buscar Libros</span>
       </button>
 
+        <!-- Buscar personas -->
+        <a class="btn btn-primary" href="{% url 'search' %}">Buscar Personas</a>
+      <div class="topics" style="background-color: #fff;">
+        <ul>
+          <li>Programación</li>
+        </ul>
+      </div>
       <!-- Modal -->
       <div id="myModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -53,6 +60,9 @@
     </div>
   </div>
 </div>
+
+
+
 <style type="text/css">
 .btnSearch{
   margin: 10px 10px 10px 10px;
@@ -77,7 +87,9 @@
   text-decoration: none;
   color: #2ec997;
 }
+.topics{
 
+}
 </style>
 
 {% if books.has_other_pages %}

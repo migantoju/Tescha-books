@@ -11,19 +11,24 @@ from django.core.exceptions import ValidationError
 from taggit.managers import TaggableManager
 # Create your models here.
 
-Book_Type_Choices = (
-    ('Programacion', 'Programacion'),
-    ('Base de Datos', 'Base de Datos'),
-    ('Inteligencia Artificial', 'Inteligencia Artificial'),
-    ("Machine Learning", 'Machine Learning'),
-)
-
 def upload_location(instance, filename):
     return "%s/%s" %(instance.owner, filename)
 
 def validate_file_extension(value):
     if not value.name.endswith('.pdf'):
         raise ValidationError("Formato de archivo no permitido")
+
+class Category(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated at")
+    title = models.CharField(max_length=200, verbose_name='Title', null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+
+    def __unicode__(self):
+        return self.title
 
 class Book(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -35,7 +40,7 @@ class Book(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     files = models.FileField(upload_to=upload_location, validators=[validate_file_extension])
-    book_type = models.CharField(max_length=100, choices=Book_Type_Choices)
+    book_type = models.ForeignKey(Category, verbose_name='Category', null=True, blank=True)
     tags = TaggableManager()
     comment = models.ForeignKey('comments.Comment', related_name='books', null=True, blank=True)
 

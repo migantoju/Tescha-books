@@ -11,7 +11,7 @@
       <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit" class="btn btn-default"><span class="fa fa-pencil fa-lg"></span> Actualizar</button>
+        <button type="submit" class="btn btn-success"><span class="fa fa-pencil fa-lg"></span> Actualizar</button>
       </form>
     </div>
   </div>
@@ -21,6 +21,8 @@
 #cont{
   margin-top: 100px;
   background-color: #fff;
+  border-radius: 10px;
+  padding: 10px 10px 10px 10px;
 
 }
 #id_book_type {
@@ -43,12 +45,10 @@
 .#id_book_type select:focus {
     outline: none;
 }
-.btn-default{
-  padding: 10px;
-  width: 150px;
-  margin-left: 0 auto;
-  margin-right: 0 auto;
-  
+.btn-success{
+  background-color: green;
+  border-color: green;
+  width: 250px;
   margin-bottom: 10px;
 }
 </style>

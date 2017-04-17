@@ -8,25 +8,31 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
+class Degree(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
+    updated_date = models.DateTimeField(auto_now=True, verbose_name="Updated at")
+    title = models.CharField(max_length=200, verbose_name='Title')
 
-Degree_choices = (
-    ("1", 'Ingeniería Informática'),
-    ("2", 'Ingeniería en Sistemas Computacionales'),
-    ("3", 'Ingeniería Electromecanica'),
-    ("4", 'Ingeniería Industrial'),
-)
-Semestre_choices = (
-    ("1", 'Primero'),
-    ("2", 'Segundo'),
-    ("3", 'Tercero'),
-    ("4", 'Cuarto'),
-    ("5", 'Quinto'),
-    ("6", 'Sexto'),
-    ("7", 'Septimo'),
-    ("8", 'Octavo'),
-    ("9", 'Noveno'),
-    ("10", 'Residencias'),
-)
+    class Meta:
+        verbose_name = "Carrera"
+        verbose_name_plural = "Carreras"
+
+    def __unicode__(self):
+        return '%s' %(self.title)
+
+class Semestre(models.Model):
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name="Created at")
+    updated_date = models.DateTimeField(auto_now=True, verbose_name="Updated at")
+    title = models.CharField(max_length=200, verbose_name='Title')
+
+    class Meta:
+        verbose_name = "Semestre"
+        verbose_name_plural = "Semestres"
+
+
+    def __unicode__(self):
+        return '%s' %(self.title)
+
 def upload_location(instance, filename):
     return "%s/%s" %(instance.matricula, filename)
 
@@ -34,7 +40,7 @@ from stdimage.models import StdImageField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
-    degree = models.CharField(max_length=100, choices=Degree_choices)
+    degree = models.ForeignKey(Degree, verbose_name='Carrera', null=True, blank=True)
     matricula = models.CharField(max_length=9)
     # pic = models.ImageField(upload_to=upload_location, default='default.png')
     pic = StdImageField(upload_to=upload_location, default='default.png', blank=True, variations={
@@ -42,7 +48,7 @@ class Profile(models.Model):
         'thumbnail': (100, 100, True),
         'medium': (300, 200),
     })
-    semestre = models.CharField(max_length=100, choices=Semestre_choices)
+    semestre = models.ForeignKey(Semestre, verbose_name='Semestre', null=True, blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     modified = models.DateTimeField(auto_now=True)
 

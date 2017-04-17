@@ -3,14 +3,57 @@
 {% block title %} Subir nuevo archivo {% endblock title %}
 
 {% block content %}
-<div class="modal-dialog">
-    <div class="loginmodal-container">
-        <h1>Sube un nuevo recurso</h1><br>
-        <form role="form" action="{% url 'UploadBook' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input type="submit" value="Subir" class="btn btn-primary">
-        </form>
+<div class="container" id="upload-form">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1>Sube un nuevo recurso</h1><br>
+      <form id="body-form" role="form" action="{% url 'UploadBook' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+<p><label for="id_title">Titulo:</label> <input type="text" name="title" required placeholder="Python For Noobs" class="form-control" id="id_title" /></p>
+<p><label for="id_autor">Autor(es):</label> <input type="text" name="autor" required placeholder="Guido Van Rossum" class="form-control" id="id_autor" /></p>
+<p><label for="id_description">Descripcion:</label> <textarea name="description" rows="10" id="id_description" minlength="150" required placeholder="Cuentanos un poco de que trata... Minimo 150 caracteres" cols="40" class="form-control">
+</textarea></p>
+<p>
+  <label id="ilabel" for="id_files">Sube tu archivo:</label>
+  <input type="file" class="form-control" data-show-preview="false" name="files" required class="file" id="id_files" />
+</p>
+<p>
+  <label for="id_book_type">Tipo de Libro:</label>
+  <select name="book_type" required id="id_book_type" class="form-control">
+    <option value="" selected>---------</option>
+
+    <option value="Programacion">Programacion</option>
+
+    <option value="Base de Datos">Base de Datos</option>
+
+    <option value="Inteligencia Artificial">Inteligencia Artificial</option>
+
+    <option value="Machine Learning">Machine Learning</option>
+</select></p>
+        <p>
+          <label for="id_tags">Tags:</label>
+          <input type="text" name="tags" required placeholder="Coding, Gaming, Eating" class="form-control" id="id_tags" />
+        </p>
+          <input type="submit" value="Subir" class="btn btn-success">
+      </form>
     </div>
+  </div>
 </div>
+ <style type="text/css" media="screen">
+
+  .btn-success{
+    background-color: green;
+    border-color: green;
+    width: 250px;
+  }
+  #upload-form{
+    background-color: #fff;
+    padding: 15px 15px 15px 15px;
+    box-shadow: 3px 3px 15px #2f2f2f;
+  }
+  #body-form{
+    margin-top: 25px;
+  }
+
+ </style>
 {% endblock content %}

@@ -6,10 +6,11 @@
   <div class="book">
     <div class="jumbotron">
 
-      {% if book.owner == request.user %}
       <div class="actions">
+        {% if book.owner == request.user %}
         <a href="{% url 'book_edit' slug=book.slug %}" class="btn btn-info"><span class="fa fa-pencil-square-o fa-lg"></span> Editar</a>
         <a href="{% url 'book_remove' slug=book.slug %}" class="btn btn-danger"><span class="fa fa-trash-o fa-lg"></span> Borrar</a>
+        {% endif %}
         {% if book.published_date %}
           <div class="date">
             {{book.published_date}}
@@ -18,7 +19,6 @@
           <a href="{% url 'book_publish' slug=book.slug %}" class="btn btn-success"><span class="fa fa-pencil fa-lg"></span> Publicar</a>
         {% endif %}
       </div>
-      {% endif %}
       <h2 class="b_d_title">{{book.title}}</h2>
       <p class="book_autor">Autor: {{book.autor}}</p>
       <p class="book_description">{{book.description}}</p>
@@ -102,8 +102,11 @@
     .buttonn{
       text-align: center;
     }
-    .actions{
-
+    .avatar img{
+      float: left;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-right: 5px;
     }
   </style>
 
