@@ -18,7 +18,7 @@
 <div class="modal-dialog">
     <div class="loginmodal-container">
         <h1>Ingresa a tu cuenta</h1><br>
-        <form role="form" action="" method="post">
+        <form role="form" action="{% url 'login' %}" method="post">
             {% csrf_token %}
             <p>
                 <label for="id_username">Nombre de usuario:</label>

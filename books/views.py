@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render,get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Book
+from .models import Book, Category
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -16,6 +16,7 @@ from django.contrib.auth.models import User
 
 def index(request):
     books_list = Book.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    cate = Category.objects.all()
     query = request.GET.get('q')
     if query:
         books_list = books_list.filter(
@@ -33,7 +34,7 @@ def index(request):
         books = paginator.page(1)
     except EmptyPage:
         books = paginator.page(paginator.num_pages)
-    return render(request, 'index.html', {'books':books})
+    return render(request, 'index.html', {'books':books, 'cate':cate})
 
 from comments.forms import CommentForm
 from comments.models import Comment
@@ -85,7 +86,8 @@ def book_remove(request, slug=None):
 @login_required
 def book_draft_list(request):
     book = Book.objects.filter(published_date__isnull=True).order_by('-created_date')
-    return render(request, 'books/book_draft_list.html', {'book': book})
+    category = Category.objects.all()
+    return render(request, 'books/book_draft_list.html', {'book': book, 'category':category})
 
 @login_required
 def book_publish(request, slug=None):

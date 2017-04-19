@@ -10,16 +10,19 @@
   <div class="row" id="contenedor">
     <div class="col-md-3 colorear">
       <!-- buscador -->
-      <button type="button" class="btn btn-info btn-lg btnSearch" data-toggle="modal" data-target="#myModal">
-        <span class="fa fa-search fa-lg"> Buscar Libros</span>
-      </button>
-
-        <!-- Buscar personas -->
-        <a class="btn btn-primary" href="{% url 'search' %}">Buscar Personas</a>
       <div class="topics" style="background-color: #fff;">
-        <ul>
-          <li>Programación</li>
-        </ul>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4>Categorías</h4>
+          </div>
+          <div class="panel-body">
+            <ul>
+              {% for catego in cate %}
+                <li><a href="">{{catego.title}}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
       </div>
       <!-- Modal -->
       <div id="myModal" class="modal fade" role="dialog">
@@ -56,7 +59,12 @@
       {% include "books/list_ajax.html" %}
     </div>
     <div class="col-md-3 colorear3">
+      <button type="button" class="btn btn-info btn-lg btnSearch" data-toggle="modal" data-target="#myModal">
+        <span class="fa fa-search fa-lg"> Buscar Libros</span>
+      </button>
 
+        <!-- Buscar personas -->
+        <a class="btn btn-primary" href="{% url 'search' %}">Buscar Personas</a>
     </div>
   </div>
 </div>

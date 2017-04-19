@@ -8,3 +8,4 @@ db.sqlite3
 *.png
 *.jpg
 *.jpeg
+migrations
